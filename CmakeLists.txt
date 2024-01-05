@@ -1,0 +1,49 @@
+cmake_minimum_required(VERSION 3.11.0)
+
+set(NAME VulkanEngine)
+set(VULKAN_SDK_PATH "G:\\Libs\\VulkanSDK")
+set(GLFW_PATH "G:\\Libs\\glfw-3.3.9.bin.WIN64")
+
+# GLM
+set(GLM_PATH "G:\\Libs\\glm")
+
+project(${NAME} VERSION 0.1.0)
+
+# Vulkan
+if (DEFINED VULKAN_SDK_PATH)
+    set(Vulkan_INCLUDE_DIRS "${VULKAN_SDK_PATH}/Include")
+    set(Vulkan_LIBRARIES "${VULKAN_SDK_PATH}/Lib") 
+    set(Vulkan_FOUND "True")
+else()
+    message("Vulkan Not Found!")
+endif()
+
+# GLFW
+if (DEFINED GLFW_PATH)
+    set(GLFW_INCLUDE_DIRS "${GLFW_PATH}/include")
+    set(GLFW_LIB "${GLFW_PATH}/lib-vc2022")
+    message(${GLFW_LIB})
+endif()
+
+file(GLOB_RECURSE SOURCES ${PROJECT_SOURCE_DIR}/src/*.cpp)
+
+add_executable(${NAME} ${SOURCES})
+
+# TODO Узнать что делает: "target_include_directories"
+target_include_directories(${NAME} PUBLIC
+    ${PROJECT_SOURCE_DIR}/src
+    ${Vulkan_INCLUDE_DIRS}
+    ${GLFW_INCLUDE_DIRS}
+    ${GLM_PATH}
+)
+
+# TODO И еще узнать что делает вот это
+target_link_directories(${NAME} PUBLIC
+    ${Vulkan_LIBRARIES}
+    ${GLFW_LIB}
+)
+
+# TODO И это тоже 
+target_link_libraries(${NAME} glfw3 vulkan-1)
+
+# TODO вообще нужно решить конфликт библиотек
