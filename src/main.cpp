@@ -1,34 +1,23 @@
-#include <glm/matrix.hpp>
-#include <glm/vec4.hpp>
-#include <GLFW/glfw3.h>
-#include <vulkan/vulkan.hpp>
+#include "app.hpp"
 
+#include <cstdlib>
 #include <iostream>
+#include <stdexcept>
 
 int main()
 {
-    glfwInit();
-    std::cout << "Hello, World!" << std::endl;
+    ss::Applcation app{};
 
-    glfwWindowHint(GLFW_CLIENT_API, GLFW_NO_API);
-    GLFWwindow* window = glfwCreateWindow(800, 600, "Vulkan Window", nullptr, nullptr);
-
-    uint32_t extensionCount = 0;
-    vkEnumerateInstanceExtensionProperties(nullptr, &extensionCount, nullptr);
-
-    std::cout << extensionCount << " extensions supported" << std::endl;
-
-    glm::mat4 matrix;
-    glm::vec4 vector;
-    auto test = matrix * vector;
-
-    while (!glfwWindowShouldClose(window))
+    // TODO try 
+    try
     {
-        glfwPollEvents();
+        app.run();
+    }
+    catch (const std::exception &e)
+    {
+        std::cerr << e.what() << std::endl;
+        return EXIT_FAILURE;
     }
 
-    glfwDestroyWindow(window);
-    glfwTerminate();
-    
-    return 0;
+    return EXIT_SUCCESS;
 }

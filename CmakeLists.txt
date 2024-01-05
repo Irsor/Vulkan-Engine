@@ -47,3 +47,5 @@ target_link_directories(${NAME} PUBLIC
 target_link_libraries(${NAME} glfw3 vulkan-1)
 
 # TODO вообще нужно решить конфликт библиотек
+
+# TODO решить проблему с GIT Ignore
